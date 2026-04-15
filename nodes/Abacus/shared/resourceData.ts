@@ -12,6 +12,7 @@ type ResourceField = {
 	name: string;
 	displayName: string;
 	type?: 'string' | 'number' | 'boolean';
+	default?: string | number | boolean;
 	description: string;
 };
 
@@ -62,7 +63,13 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'email', displayName: 'Email', description: 'Primary email address' },
 			{ name: 'phone', displayName: 'Phone', description: 'Primary phone number' },
 			{ name: 'language', displayName: 'Language', description: 'Communication language' },
-			{ name: 'isActive', displayName: 'Is Active', type: 'boolean', description: 'Whether the subject is active' },
+			{
+				name: 'isActive',
+				displayName: 'Is Active',
+				type: 'boolean',
+				default: false,
+				description: 'Whether the subject is active',
+			},
 		],
 	},
 	{
@@ -76,7 +83,13 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'status', displayName: 'Status', description: 'Order status' },
 			{ name: 'orderDate', displayName: 'Order Date', description: 'Order date in ISO format' },
 			{ name: 'currency', displayName: 'Currency', description: 'Order currency' },
-			{ name: 'totalAmount', displayName: 'Total Amount', type: 'number', description: 'Order total amount' },
+			{
+				name: 'totalAmount',
+				displayName: 'Total Amount',
+				type: 'number',
+				default: 0,
+				description: 'Order total amount',
+			},
 		],
 	},
 	{
@@ -90,7 +103,13 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'status', displayName: 'Status', description: 'Invoice status' },
 			{ name: 'invoiceDate', displayName: 'Invoice Date', description: 'Invoice date in ISO format' },
 			{ name: 'dueDate', displayName: 'Due Date', description: 'Due date in ISO format' },
-			{ name: 'totalAmount', displayName: 'Total Amount', type: 'number', description: 'Invoice total amount' },
+			{
+				name: 'totalAmount',
+				displayName: 'Total Amount',
+				type: 'number',
+				default: 0,
+				description: 'Invoice total amount',
+			},
 		],
 	},
 	{
@@ -104,14 +123,20 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'status', displayName: 'Status', description: 'Project status' },
 			{ name: 'startDate', displayName: 'Start Date', description: 'Start date in ISO format' },
 			{ name: 'endDate', displayName: 'End Date', description: 'End date in ISO format' },
-			{ name: 'budgetAmount', displayName: 'Budget Amount', type: 'number', description: 'Budget amount' },
+			{
+				name: 'budgetAmount',
+				displayName: 'Budget Amount',
+				type: 'number',
+				default: 0,
+				description: 'Budget amount',
+			},
 		],
 	},
 ];
 
 const operations: INodePropertyOptions[] = [
 	{ name: 'Get', value: 'get', action: 'Get a resource by ID' },
-	{ name: 'Get All', value: 'getAll', action: 'Get many resources' },
+	{ name: 'Get Many', value: 'getAll', action: 'Get many resources' },
 	{ name: 'Create', value: 'create', action: 'Create a resource' },
 	{ name: 'Update', value: 'update', action: 'Update a resource' },
 	{ name: 'Delete', value: 'delete', action: 'Delete a resource' },
@@ -166,7 +191,7 @@ const createListProperties = (resource: ResourceConfig): INodeProperties[] => [
 				operation: ['getAll'],
 			},
 		},
-		description: 'Whether to fetch all pages automatically',
+		description: 'Whether to return all results or only up to a given limit',
 	},
 	{
 		displayName: 'Limit',
@@ -183,7 +208,7 @@ const createListProperties = (resource: ResourceConfig): INodeProperties[] => [
 				returnAll: [false],
 			},
 		},
-		description: 'Max number of records to return',
+		description: 'Max number of results to return',
 	},
 	{
 		displayName: 'Updated After',
@@ -218,7 +243,7 @@ const createFieldProperties = (resource: ResourceConfig): INodeProperties[] =>
 		displayName: field.displayName,
 		name: field.name,
 		type: field.type ?? 'string',
-		default: field.type === 'number' ? 0 : field.type === 'boolean' ? false : '',
+		default: field.default ?? '',
 		displayOptions: {
 			show: {
 				resource: [resource.value],
@@ -277,10 +302,10 @@ export const abacusNodeProperties: INodeProperties[] = [
 		options: [
 			{ name: 'Address', value: 'addresses' },
 			{ name: 'Customer', value: 'customers' },
-			{ name: 'Subject', value: 'subjects' },
-			{ name: 'Order', value: 'orders' },
 			{ name: 'Invoice', value: 'invoices' },
+			{ name: 'Order', value: 'orders' },
 			{ name: 'Project', value: 'projects' },
+			{ name: 'Subject', value: 'subjects' },
 		],
 		default: 'addresses',
 	},

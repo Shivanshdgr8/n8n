@@ -1,12 +1,13 @@
 import type {
 	IDataObject,
 	IExecuteFunctions,
+	INode,
 	INodeExecutionData,
 	INodeType,
 	INodeTypeDescription,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError, NodeConnectionTypes } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 
 import { abacusNodeProperties, resourceByName, type AbacusResourceName } from './shared/resourceData';
 import { abacusApiRequest, getListItems, normalizeRecord } from './shared/transport';
@@ -32,15 +33,22 @@ const setValue = (target: IDataObject, key: string, value: unknown): void => {
 	target[key] = value;
 };
 
-const ensureNonEmptyBody = (body: IDataObject, operation: 'create' | 'update'): void => {
+const ensureNonEmptyBody = (
+	node: INode,
+	body: IDataObject,
+	operation: 'create' | 'update',
+	itemIndex: number,
+): void => {
 	if (Object.keys(body).length > 0) {
 		return;
 	}
 
-	throw new Error(
+	throw new NodeOperationError(
+		node,
 		operation === 'create'
 			? 'At least one field must be provided to create a record'
 			: 'At least one field must be provided to update a record',
+		{ itemIndex },
 	);
 };
 
@@ -117,8 +125,8 @@ export class Abacus implements INodeType {
 		defaults: {
 			name: 'Abacus',
 		},
-		inputs: [NodeConnectionTypes.Main],
-		outputs: [NodeConnectionTypes.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				name: 'abacusApi',
@@ -171,7 +179,7 @@ export class Abacus implements INodeType {
 
 				if (operation === 'create') {
 					const body = buildBody(this, resource, itemIndex);
-					ensureNonEmptyBody(body, 'create');
+					ensureNonEmptyBody(this.getNode(), body, 'create', itemIndex);
 					const response = await abacusApiRequest(this, credentials, tokenState, {
 						method: 'POST',
 						endpoint: resourceConfig.path,
@@ -184,7 +192,7 @@ export class Abacus implements INodeType {
 				if (operation === 'update') {
 					const recordId = this.getNodeParameter(`${resource}Id`, itemIndex) as string;
 					const body = buildBody(this, resource, itemIndex);
-					ensureNonEmptyBody(body, 'update');
+					ensureNonEmptyBody(this.getNode(), body, 'update', itemIndex);
 					const response = await abacusApiRequest(this, credentials, tokenState, {
 						method: 'PATCH',
 						endpoint: `${resourceConfig.path}/${recordId}`,

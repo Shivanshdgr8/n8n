@@ -19,7 +19,10 @@ export default [
 	{
 		...n8nPlugin,
 		files: ['credentials/**/*.ts'],
-		rules: n8nNodesBase.configs.credentials.rules,
+		rules: {
+			...n8nNodesBase.configs.credentials.rules,
+			'n8n-nodes-base/cred-class-field-documentation-url-miscased': 'off',
+		},
 	},
 	{
 		...n8nPlugin,
