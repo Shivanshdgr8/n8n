@@ -25,7 +25,7 @@ type ResourceConfig = {
 const resourceConfigs: ResourceConfig[] = [
 	{
 		value: 'addresses',
-		name: 'Addresses',
+		name: 'Address',
 		path: 'addresses',
 		fields: [
 			{ name: 'code', displayName: 'Code', description: 'Internal address code' },
@@ -41,7 +41,7 @@ const resourceConfigs: ResourceConfig[] = [
 	},
 	{
 		value: 'customers',
-		name: 'Customers',
+		name: 'Customer',
 		path: 'customers',
 		fields: [
 			{ name: 'customerNumber', displayName: 'Customer Number', description: 'Customer number in Abacus' },
@@ -54,7 +54,7 @@ const resourceConfigs: ResourceConfig[] = [
 	},
 	{
 		value: 'subjects',
-		name: 'Subjects',
+		name: 'Subject',
 		path: 'subjects',
 		fields: [
 			{ name: 'subjectNumber', displayName: 'Subject Number', description: 'Subject number in Abacus' },
@@ -67,7 +67,7 @@ const resourceConfigs: ResourceConfig[] = [
 	},
 	{
 		value: 'orders',
-		name: 'Orders',
+		name: 'Order',
 		path: 'orders',
 		fields: [
 			{ name: 'orderNumber', displayName: 'Order Number', description: 'Order number in Abacus' },
@@ -81,7 +81,7 @@ const resourceConfigs: ResourceConfig[] = [
 	},
 	{
 		value: 'invoices',
-		name: 'Invoices',
+		name: 'Invoice',
 		path: 'invoices',
 		fields: [
 			{ name: 'invoiceNumber', displayName: 'Invoice Number', description: 'Invoice number in Abacus' },
@@ -95,7 +95,7 @@ const resourceConfigs: ResourceConfig[] = [
 	},
 	{
 		value: 'projects',
-		name: 'Projects',
+		name: 'Project',
 		path: 'projects',
 		fields: [
 			{ name: 'projectNumber', displayName: 'Project Number', description: 'Project number in Abacus' },
@@ -116,11 +116,6 @@ const operations: INodePropertyOptions[] = [
 	{ name: 'Update', value: 'update', action: 'Update a resource' },
 	{ name: 'Delete', value: 'delete', action: 'Delete a resource' },
 ];
-
-const resourceOptions: INodePropertyOptions[] = resourceConfigs.map((resource) => ({
-	name: resource.name,
-	value: resource.value,
-}));
 
 export const resourceByName = resourceConfigs.reduce<Record<AbacusResourceName, ResourceConfig>>(
 	(accumulator, resource) => {
@@ -156,7 +151,7 @@ const createIdProperty = (resource: ResourceConfig): INodeProperties => ({
 			operation: ['get', 'update', 'delete'],
 		},
 	},
-	description: `Identifier of the ${resource.name.slice(0, -1).toLowerCase()} record`,
+	description: `Identifier of the ${resource.name.toLowerCase()} record`,
 });
 
 const createListProperties = (resource: ResourceConfig): INodeProperties[] => [
@@ -279,7 +274,14 @@ export const abacusNodeProperties: INodeProperties[] = [
 		name: 'resource',
 		type: 'options',
 		noDataExpression: true,
-		options: resourceOptions,
+		options: [
+			{ name: 'Address', value: 'addresses' },
+			{ name: 'Customer', value: 'customers' },
+			{ name: 'Subject', value: 'subjects' },
+			{ name: 'Order', value: 'orders' },
+			{ name: 'Invoice', value: 'invoices' },
+			{ name: 'Project', value: 'projects' },
+		],
 		default: 'addresses',
 	},
 	...resourceConfigs.flatMap((resource) => [

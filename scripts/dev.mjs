@@ -76,7 +76,7 @@ const findGlobalN8nExecutable = () => {
 		.map((line) => line.trim())
 		.find(Boolean) ?? null;
 };
-
+//offline
 const isOffline = String(process.env.npm_config_offline).toLowerCase() === 'true';
 
 run(npmExecutable, ['run', 'build']);
