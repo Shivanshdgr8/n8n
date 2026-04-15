@@ -64,8 +64,8 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'phone', displayName: 'Phone', description: 'Primary phone number' },
 			{ name: 'language', displayName: 'Language', description: 'Communication language' },
 			{
-				name: 'isActive',
 				displayName: 'Is Active',
+				name: 'isActive',
 				type: 'boolean',
 				default: false,
 				description: 'Whether the subject is active',
@@ -84,8 +84,8 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'orderDate', displayName: 'Order Date', description: 'Order date in ISO format' },
 			{ name: 'currency', displayName: 'Currency', description: 'Order currency' },
 			{
-				name: 'totalAmount',
 				displayName: 'Total Amount',
+				name: 'totalAmount',
 				type: 'number',
 				default: 0,
 				description: 'Order total amount',
@@ -104,8 +104,8 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'invoiceDate', displayName: 'Invoice Date', description: 'Invoice date in ISO format' },
 			{ name: 'dueDate', displayName: 'Due Date', description: 'Due date in ISO format' },
 			{
-				name: 'totalAmount',
 				displayName: 'Total Amount',
+				name: 'totalAmount',
 				type: 'number',
 				default: 0,
 				description: 'Invoice total amount',
@@ -124,11 +124,11 @@ const resourceConfigs: ResourceConfig[] = [
 			{ name: 'startDate', displayName: 'Start Date', description: 'Start date in ISO format' },
 			{ name: 'endDate', displayName: 'End Date', description: 'End date in ISO format' },
 			{
-				name: 'budgetAmount',
 				displayName: 'Budget Amount',
+				name: 'budgetAmount',
 				type: 'number',
 				default: 0,
-				description: 'Budget amount',
+				description: 'Planned project budget amount',
 			},
 		],
 	},
