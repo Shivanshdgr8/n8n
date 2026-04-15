@@ -17,6 +17,15 @@ Current node capabilities:
 - Automatic pagination for list operations
 - Structured fields in the n8n UI instead of raw JSON-only input
 
+## Package Metadata
+
+- Package name: `n8n-nodes-abacus`
+- Version: `0.1.0`
+- Author: `Shivansh`
+- Repository: `https://github.com/Shivanshdgr8/n8n`
+- Issues: `https://github.com/Shivanshdgr8/n8n/issues`
+- License: `MIT`
+
 ## Project Status
 
 The package is buildable, lintable, and loadable in local n8n.
@@ -220,6 +229,7 @@ npm pack
 This project is prepared for verified n8n community-node publication:
 
 - package name: `n8n-nodes-abacus`
+- repository: `https://github.com/Shivanshdgr8/n8n`
 - GitHub Actions based CI
 - GitHub Actions based npm publish
 - npm provenance enabled

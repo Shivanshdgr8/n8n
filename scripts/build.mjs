@@ -11,6 +11,8 @@ if (tsc.status !== 0) {
 	process.exit(tsc.status ?? 1);
 }
 
+rmSync('dist/tsconfig.tsbuildinfo', { force: true });
+
 if (existsSync('icons')) {
 	mkdirSync('dist/icons', { recursive: true });
 	cpSync('icons', 'dist/icons', { recursive: true });

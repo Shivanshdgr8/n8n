@@ -3,9 +3,9 @@
 	"version": "0.1.0",
 	"description": "n8n community node for the Abacus ERP REST API",
 	"license": "MIT",
-	"homepage": "https://github.com/SAITS/n8n-nodes-abacus",
+	"homepage": "https://github.com/Shivanshdgr8/n8n",
 	"bugs": {
-		"url": "https://github.com/SAITS/n8n-nodes-abacus/issues"
+  	"url": "https://github.com/Shivanshdgr8/n8n/issues"
 	},
 	"keywords": [
 		"n8n-community-node-package",
@@ -14,11 +14,11 @@
 		"erp"
 	],
 	"author": {
-		"name": "SAITS"
+		"name": "Shivansh"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/SAITS/n8n-nodes-abacus.git"
+		"url": "https://github.com/Shivanshdgr8/n8n.git"
 	},
 	"engines": {
 		"node": ">=22",
